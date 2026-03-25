@@ -1,12 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-
-const SLUGS = ['adaptation-ai', 'manifesto'] as const
-type Slug = (typeof SLUGS)[number]
+import { getPublished } from '../../../lib/essays'
 
 export function generateStaticParams() {
-  return SLUGS.map((slug) => ({ slug }))
+  return getPublished().map((e) => ({ slug: e.slug }))
 }
 
 const prose: Record<string, React.CSSProperties> = {
@@ -17,41 +15,32 @@ const prose: Record<string, React.CSSProperties> = {
     color: 'var(--cream)',
     marginBottom: '1.6em',
   },
-  h1: {
-    fontFamily: 'var(--font-lora), Georgia, serif',
-    fontSize: 'clamp(28px, 4vw, 42px)',
-    fontWeight: 400,
-    lineHeight: 1.2,
-    color: 'var(--cream)',
-    marginBottom: '0.5em',
-    marginTop: '1.6em',
-  },
   h2: {
     fontFamily: 'var(--font-lora), Georgia, serif',
     fontSize: '22px',
-    fontWeight: 500,
+    fontWeight: 400,
     lineHeight: 1.3,
-    color: 'var(--amber-dim)',
+    color: 'var(--cream)',
     marginBottom: '0.6em',
-    marginTop: '2em',
+    marginTop: '2.5rem',
   },
   h3: {
     fontFamily: 'var(--font-lora), Georgia, serif',
     fontSize: '18px',
-    fontWeight: 500,
+    fontWeight: 400,
     lineHeight: 1.35,
     color: 'var(--amber-dim)',
     marginBottom: '0.5em',
-    marginTop: '1.8em',
+    marginTop: '2rem',
   },
   blockquote: {
     borderLeft: '2px solid var(--amber-dim)',
     paddingLeft: '20px',
-    margin: '1.8em 0',
+    margin: '2rem 0',
     fontStyle: 'italic',
     color: 'var(--muted)',
     fontFamily: 'var(--font-lora), Georgia, serif',
-    fontSize: '16px',
+    fontSize: '17px',
     lineHeight: 1.75,
   },
   a: {
@@ -60,27 +49,36 @@ const prose: Record<string, React.CSSProperties> = {
   },
   code: {
     fontFamily: 'var(--font-mono), monospace',
-    fontSize: '14px',
+    fontSize: '13px',
     background: 'var(--bg2)',
     padding: '2px 6px',
-    borderRadius: '2px',
+    borderRadius: '3px',
     color: 'var(--cream)',
   },
   pre: {
     fontFamily: 'var(--font-mono), monospace',
     fontSize: '13px',
     background: 'var(--bg2)',
-    padding: '20px',
+    padding: '16px',
     borderRadius: '4px',
+    border: '0.5px solid var(--faint)',
     overflowX: 'auto' as const,
     marginBottom: '1.6em',
     lineHeight: 1.6,
     color: 'var(--cream)',
   },
+  strong: {
+    color: 'var(--cream)',
+    fontWeight: 500,
+  },
+  hr: {
+    border: 'none',
+    borderTop: '0.5px solid var(--faint)',
+    margin: '2.5rem 0',
+  },
 }
 
 const components = {
-  h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h1 style={prose.h1} {...props} />,
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h2 style={prose.h2} {...props} />,
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => <h3 style={prose.h3} {...props} />,
   p:  (props: React.HTMLAttributes<HTMLParagraphElement>) => <p style={prose.p} {...props} />,
@@ -97,6 +95,8 @@ const components = {
   ),
   code: (props: React.HTMLAttributes<HTMLElement>) => <code style={prose.code} {...props} />,
   pre:  (props: React.HTMLAttributes<HTMLPreElement>) => <pre style={prose.pre} {...props} />,
+  strong: (props: React.HTMLAttributes<HTMLElement>) => <strong style={prose.strong} {...props} />,
+  hr: () => <hr style={prose.hr} />,
 }
 
 export default async function EssayPage({
@@ -104,7 +104,10 @@ export default async function EssayPage({
 }: {
   params: { slug: string }
 }) {
-  if (!SLUGS.includes(params.slug as Slug)) {
+  const published = getPublished()
+  const valid = published.map((e) => e.slug)
+
+  if (!valid.includes(params.slug)) {
     notFound()
   }
 
@@ -120,10 +123,12 @@ export default async function EssayPage({
   return (
     <div>
       <style>{`
-        .nav-link:hover    { color: var(--cream) !important; }
-        .back-link:hover   { color: var(--amber) !important; }
-        .footer-link:hover { color: var(--amber) !important; }
-        .divider-rule      { border: none; border-top: 0.5px solid var(--faint); margin: 40px 0; }
+        .nav-link:hover     { color: var(--cream) !important; }
+        .nav-subscribe:hover { background: var(--amber) !important; color: #0f0e0c !important; }
+        .back-link:hover    { color: var(--amber) !important; }
+        .footer-link:hover  { color: var(--amber) !important; }
+        .email-input:focus  { border-color: var(--amber-dim) !important; outline: none; }
+        .divider-rule       { border: none; border-top: 0.5px solid var(--faint); margin: 40px 0; }
         @media (max-width: 640px) {
           .essay-wrap { padding: 0 24px !important; }
           .nav-links  { display: none !important; }
@@ -134,6 +139,7 @@ export default async function EssayPage({
         style={{ maxWidth: '640px', margin: '0 auto', padding: '0 48px' }}
         className="essay-wrap"
       >
+
         {/* Nav */}
         <nav
           style={{
@@ -143,7 +149,7 @@ export default async function EssayPage({
             padding: '28px 0 24px',
             borderBottom: '0.5px solid var(--faint)',
           }}
-          className="anim-0"
+          className="fade-up delay-0"
         >
           <Link
             href="/"
@@ -167,43 +173,59 @@ export default async function EssayPage({
             </span>
           </Link>
           <ul style={{ display: 'flex', alignItems: 'center', gap: '24px', listStyle: 'none' }} className="nav-links">
-            {['Journal', 'About', 'Archive'].map((item) => (
-              <li key={item}>
-                <Link
-                  href="/"
-                  style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '11px', color: 'var(--muted)', textDecoration: 'none', transition: 'color 0.2s' }}
-                  className="nav-link"
-                >
-                  {item}
-                </Link>
-              </li>
-            ))}
+            <li>
+              <Link
+                href="/journal"
+                style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '11px', color: 'var(--muted)', textDecoration: 'none', transition: 'color 0.2s' }}
+                className="nav-link"
+              >
+                Journal
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/about"
+                style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '11px', color: 'var(--muted)', textDecoration: 'none', transition: 'color 0.2s' }}
+                className="nav-link"
+              >
+                About
+              </Link>
+            </li>
+            <li>
+              <a
+                href="/#subscribe"
+                style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '11px', color: 'var(--amber)', border: '0.5px solid var(--amber)', padding: '6px 14px', borderRadius: '2px', textDecoration: 'none', transition: 'background 0.2s, color 0.2s' }}
+                className="nav-subscribe"
+              >
+                Subscribe →
+              </a>
+            </li>
           </ul>
         </nav>
 
         {/* Essay header */}
-        <header style={{ padding: '56px 0 0' }} className="anim-1">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
+        <header style={{ padding: '56px 0 0' }} className="fade-up delay-1">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             {category && (
-              <span style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '10px', color: 'var(--amber)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+              <span style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '10px', color: 'var(--amber)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                 {category}
               </span>
             )}
             {readTime && (
-              <span style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '10px', color: 'var(--amber-dim)', letterSpacing: '0.08em' }}>
-                {readTime}
+              <span style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '10px', color: 'var(--muted)', letterSpacing: '0.06em' }}>
+                {readTime} read
               </span>
             )}
           </div>
 
-          <h1 style={{ fontFamily: 'var(--font-lora), Georgia, serif', fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 400, lineHeight: 1.2, color: 'var(--cream)', marginBottom: '16px' }}>
+          <h1 style={{ fontFamily: 'var(--font-lora), Georgia, serif', fontSize: 'clamp(26px, 4vw, 40px)', fontWeight: 400, lineHeight: 1.2, color: 'var(--cream)', marginTop: '1rem' }}>
             {title}
           </h1>
 
           {date && (
             <time
               dateTime={date}
-              style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '11px', color: 'var(--muted)', display: 'block', marginBottom: '40px' }}
+              style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '11px', color: 'var(--muted)', display: 'block', marginTop: '12px', marginBottom: '40px' }}
             >
               {new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
             </time>
@@ -213,34 +235,37 @@ export default async function EssayPage({
         </header>
 
         {/* Essay body */}
-        <article style={{ paddingBottom: '16px' }} className="anim-2">
+        <article style={{ paddingBottom: '16px' }} className="fade-up delay-2">
           <Content components={components} />
         </article>
 
         <hr className="divider-rule" />
 
         {/* Post-essay */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', padding: '8px 0 40px' }} className="anim-2">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', padding: '8px 0 40px' }} className="fade-up delay-2">
           <Link
-            href="/"
+            href="/journal"
             style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '11px', color: 'var(--muted)', textDecoration: 'none', transition: 'color 0.2s', letterSpacing: '0.06em' }}
             className="back-link"
           >
             ← Back to journal
           </Link>
 
-          <div style={{ background: 'var(--bg2)', border: '0.5px solid var(--faint)', borderRadius: '4px', padding: '28px' }}>
-            <p style={{ fontFamily: 'var(--font-lora), Georgia, serif', fontSize: '14px', color: 'var(--muted)', marginBottom: '16px', lineHeight: 1.65 }}>
-              Essays like this one arrive in your inbox when you subscribe.
-              No spam. Thoughtful signals in a noisy world.
+          <div style={{ background: 'var(--bg2)', borderLeft: '3px solid var(--amber)', borderRadius: '0 4px 4px 0', padding: '28px' }}>
+            <p style={{ fontFamily: 'var(--font-lora), Georgia, serif', fontStyle: 'italic', fontSize: '14px', color: 'var(--cream)', marginBottom: '4px' }}>
+              New essays when they&rsquo;re ready — no schedule, no spam.
+            </p>
+            <p style={{ fontFamily: 'var(--font-lora), Georgia, serif', fontSize: '13px', color: 'var(--muted)', marginBottom: '16px' }}>
+              Subscribe to get them in your inbox.
             </p>
             <div style={{ display: 'flex', maxWidth: '360px' }}>
               <input
                 type="email"
                 placeholder="your@email.com"
-                style={{ flex: 1, background: 'var(--bg3)', border: '0.5px solid var(--faint)', borderRight: 'none', color: 'var(--cream)', fontFamily: 'var(--font-lora), Georgia, serif', fontSize: '13px', padding: '9px 12px', borderRadius: '2px 0 0 2px', outline: 'none' }}
+                style={{ flex: 1, background: 'var(--bg3)', border: '0.5px solid var(--faint)', borderRight: 'none', color: 'var(--cream)', fontFamily: 'var(--font-lora), Georgia, serif', fontSize: '13px', padding: '10px 12px', borderRadius: '2px 0 0 2px', outline: 'none' }}
+                className="email-input"
               />
-              <button style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '11px', fontWeight: 500, background: 'var(--amber)', color: '#0f0e0c', border: 'none', padding: '9px 16px', borderRadius: '0 2px 2px 0', cursor: 'pointer', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
+              <button style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '11px', fontWeight: 500, background: 'var(--amber)', color: '#0f0e0c', border: 'none', padding: '10px 16px', borderRadius: '0 2px 2px 0', cursor: 'pointer', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
                 Subscribe →
               </button>
             </div>
@@ -266,6 +291,7 @@ export default async function EssayPage({
             ))}
           </nav>
         </footer>
+
       </div>
     </div>
   )
