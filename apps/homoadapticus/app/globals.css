@@ -1,0 +1,95 @@
+/* 1. CSS Custom Properties */
+:root {
+  --bg:        #0f0e0c;
+  --bg2:       #161512;
+  --bg3:       #1e1c18;
+  --cream:     #e8e0d0;
+  --muted:     #8a8272;
+  --faint:     #2e2c28;
+  --faint2:    #3a3730;
+  --amber:     #c8933a;
+  --amber-dim: #7a5520;
+}
+
+/* 2. Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 3. Base */
+html {
+  background: var(--bg);
+  color: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-lora), Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 1.75;
+  background: var(--bg);
+  color: var(--cream);
+  min-height: 100vh;
+}
+
+/* 4. Typography scale */
+h1, h2, h3, h4 {
+  font-family: var(--font-lora), Georgia, serif;
+  font-weight: 400;
+  color: var(--cream);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 5. Utility */
+.mono {
+  font-family: var(--font-mono), 'Courier New', monospace;
+}
+
+/* 6. Animation keyframes */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anim-0  { animation: fadeUp 450ms ease both; animation-delay: 0ms; }
+.anim-1  { animation: fadeUp 450ms ease both; animation-delay: 100ms; }
+.anim-2  { animation: fadeUp 450ms ease both; animation-delay: 200ms; }
+.anim-3  { animation: fadeUp 450ms ease both; animation-delay: 280ms; }
+.anim-4  { animation: fadeUp 450ms ease both; animation-delay: 350ms; }
+.anim-5  { animation: fadeUp 450ms ease both; animation-delay: 420ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-0, .anim-1, .anim-2, .anim-3, .anim-4, .anim-5 {
+    animation: none;
+  }
+}
+
+/* 7. Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--amber-dim);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--amber);
+}
