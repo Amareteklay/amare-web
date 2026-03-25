@@ -1,0 +1,15 @@
+{
+  "name": "amare-web",
+  "private": true,
+  "packageManager": "npm@10.9.2",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev:amare": "turbo dev --filter=amareteklay",
+    "dev:homo": "turbo dev --filter=homoadapticus",
+    "dev:causalica": "turbo dev --filter=causalica",
+    "build": "turbo build"
+  },
+  "devDependencies": {
+    "turbo": "^2.8.20"
+  }
+}
