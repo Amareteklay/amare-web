@@ -16,7 +16,7 @@ function Nav() {
       <ul style={s.navLinks} className="nav-links">
         <li>
           <Link href="/journal" style={s.navLink} className="nav-link">
-            Journal
+            Essays
           </Link>
         </li>
         <li>
@@ -160,18 +160,15 @@ export default function Home() {
 
         {/* ── Hero ── */}
         <section style={s.hero} className="fade-up delay-1">
-          <p style={s.heroEyebrow}>Journal of Intelligent Change</p>
+          <p style={s.heroEyebrow}>Essays on adaptation</p>
 
           <h1 style={s.heroH1}>
-            {"I've been adapting since I was twelve."}
+            {"I've been adapting my whole life."}
             <em style={s.heroH1Sub}>{"Here's what I've learned."}</em>
           </h1>
 
           <p style={s.heroBody}>
-            I left home at 12, moved to boarding school at 14, crossed
-            continents for a PhD, and now watch AI reshape everything
-            I built a career around. These are essays from inside that
-            process — not a framework, not advice. Honest thinking.
+            Adapting has been my default mode since childhood—new places, new people, no permanent ground. Now, as the career I built begins to shift, AI is another déjà vu in me. These are chronicles from someone who knows this terrain from the inside.
           </p>
 
           <p style={s.heroByline}>— Amare Teklay, Stockholm</p>

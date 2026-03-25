@@ -27,7 +27,7 @@ export const essays: EssayMeta[] = [
     readTime: '9 min',
     date: '2026-01-01',
     lede: 'Adaptation is not a last resort. It is a design principle for a life.',
-    published: true,
+    published: false,
   },
 ]
 

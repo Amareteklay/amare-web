@@ -49,7 +49,7 @@ export default function JournalPage() {
           <ul style={s.navLinks} className="nav-links">
             <li>
               <Link href="/journal" style={{ ...s.navLink, color: 'var(--cream)' }}>
-                Journal
+                Essays
               </Link>
             </li>
             <li>

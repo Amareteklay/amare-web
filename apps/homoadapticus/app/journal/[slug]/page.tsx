@@ -179,7 +179,7 @@ export default async function EssayPage({
                 style={{ fontFamily: 'var(--font-mono), monospace', fontSize: '11px', color: 'var(--muted)', textDecoration: 'none', transition: 'color 0.2s' }}
                 className="nav-link"
               >
-                Journal
+                Essays
               </Link>
             </li>
             <li>

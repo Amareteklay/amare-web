@@ -33,7 +33,7 @@ export default function AboutPage() {
           <ul style={s.navLinks} className="nav-links">
             <li>
               <Link href="/journal" style={s.navLink} className="nav-link">
-                Journal
+                Essays
               </Link>
             </li>
             <li>
