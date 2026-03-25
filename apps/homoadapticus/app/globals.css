@@ -1,15 +1,15 @@
 /* 1. CSS Custom Properties */
 :root {
-  --bg:        #0f0e0c;
-  --bg2:       #161512;
-  --bg3:       #1e1c18;
-  --cream:     #e8e0d0;
-  --muted:     #8a8272;
-  --faint:     #2e2c28;
-  --faint2:    #3a3730;
-  --amber:     #c8933a;
-  --amber-dim: #7a5520;
-  --amber-bg:  #1a1408;
+  --bg: #fafaf8;
+  --bg2: #f3f2ee;
+  --bg3: #eceae4;
+  --cream: #1a1814;
+  --muted: #6b6560;
+  --faint: #e0ddd6;
+  --faint2: #d0ccc4;
+  --amber: #8b5e3c;
+  --amber-dim: #c4895a;
+  --amber-bg: #fdf6ee;
 }
 
 /* 2. Reset */
@@ -30,7 +30,7 @@ html {
 }
 
 body {
-  font-family: var(--font-lora), Georgia, 'Times New Roman', serif;
+  font-family: var(--font-lora), Georgia, "Times New Roman", serif;
   font-size: 16px;
   line-height: 1.75;
   background: var(--bg);
@@ -39,7 +39,10 @@ body {
 }
 
 /* 4. Typography */
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-lora), Georgia, serif;
   font-weight: 400;
   color: var(--cream);
@@ -87,30 +90,72 @@ a {
   opacity: 0;
 }
 
-.delay-0 { animation-delay: 0ms; }
-.delay-1 { animation-delay: 100ms; }
-.delay-2 { animation-delay: 200ms; }
-.delay-3 { animation-delay: 280ms; }
-.delay-4 { animation-delay: 350ms; }
+.delay-0 {
+  animation-delay: 0ms;
+}
+.delay-1 {
+  animation-delay: 100ms;
+}
+.delay-2 {
+  animation-delay: 200ms;
+}
+.delay-3 {
+  animation-delay: 280ms;
+}
+.delay-4 {
+  animation-delay: 350ms;
+}
 
 /* Legacy anim classes — kept for any existing usage */
-.anim-0 { animation: fadeUp 450ms ease both; animation-delay: 0ms; }
-.anim-1 { animation: fadeUp 450ms ease both; animation-delay: 100ms; }
-.anim-2 { animation: fadeUp 450ms ease both; animation-delay: 200ms; }
-.anim-3 { animation: fadeUp 450ms ease both; animation-delay: 280ms; }
-.anim-4 { animation: fadeUp 450ms ease both; animation-delay: 350ms; }
-.anim-5 { animation: fadeUp 450ms ease both; animation-delay: 420ms; }
+.anim-0 {
+  animation: fadeUp 450ms ease both;
+  animation-delay: 0ms;
+}
+.anim-1 {
+  animation: fadeUp 450ms ease both;
+  animation-delay: 100ms;
+}
+.anim-2 {
+  animation: fadeUp 450ms ease both;
+  animation-delay: 200ms;
+}
+.anim-3 {
+  animation: fadeUp 450ms ease both;
+  animation-delay: 280ms;
+}
+.anim-4 {
+  animation: fadeUp 450ms ease both;
+  animation-delay: 350ms;
+}
+.anim-5 {
+  animation: fadeUp 450ms ease both;
+  animation-delay: 420ms;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .fade-up,
-  .anim-0, .anim-1, .anim-2, .anim-3, .anim-4, .anim-5 {
+  .anim-0,
+  .anim-1,
+  .anim-2,
+  .anim-3,
+  .anim-4,
+  .anim-5 {
     animation: none;
     opacity: 1;
   }
 }
 
 /* 7. Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg2); }
-::-webkit-scrollbar-thumb { background: var(--amber-dim); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--amber); }
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--amber-dim);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--amber);
+}
