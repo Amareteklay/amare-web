@@ -4,6 +4,7 @@ export default function Home() {
   return (
     <main>
       <h1>Homo Adapticus</h1>
+      <p>By Amare Teklay</p>
       <p>Essays on adaptation, technology, and what it means to be human.</p>
       <nav>
         <ul>
