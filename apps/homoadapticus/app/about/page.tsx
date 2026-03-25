@@ -54,7 +54,17 @@ export default function AboutPage() {
           <h1 style={s.heading}>About</h1>
 
           <div style={s.body}>
-            <p style={s.p}>[About text coming — Amare will write this]</p>
+            <p style={s.p}>Homo Adapticus is the adaptive human. It is not a framework, a productivity hack, or a corporate strategy. It is an archetype — the person who has been changing, repeatedly and sometimes painfully, long before they had a word for what they were doing.</p>
+
+<p style={s.p}>I didn't know adaptation was called adaptation until I learned it by adapting.</p>
+
+<p style={s.p}>The name came later. The necessity came first, starting at twelve years old when the ground first shifted. These essays are chronicles of that ongoing process: raw stories of change, some successful, some maladaptive, and some whose true cost only became clear years later.</p>
+
+<p style={s.p}>AI runs through much of this writing, not because it is the "topic," but because it is the latest disruption in a much longer sequence. It is the newest mirror reflecting back the trauma and the ecstasy of starting over. It amplifies the feeling of the old maps not matching the new territory — a feeling I have known my entire life.</p>
+
+<p style={s.p}>Homo Adapticus is written by Amare Teklay, a researcher based in Stockholm. I have lived in three countries and started over more times than I planned. This isn't a project about having things figured out; it's a dispatch from someone still in the middle of it.</p>
+
+<p style={s.p}>If you are renegotiating your relationship with your work, your place, or your sense of self in a world that won't stay still — you are exactly who I am writing for.</p>
           </div>
 
           {/* Elsewhere */}
